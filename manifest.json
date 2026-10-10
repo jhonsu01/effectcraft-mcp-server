@@ -1,0 +1,125 @@
+{
+  "manifest_version": "0.3",
+  "name": "effectcraft-mcp-server",
+  "version": "1.0.0",
+  "display_name": "EffectCraft Bridge",
+  "description": "Create motion graphics, animated titles and visual effects (text, shapes, media, keyframes, expressions, 306 effects, templates) and render MP4, ProRes, WebM, GIF, image sequences and Lottie, using the EffectCraft compositor installed on Windows, macOS or Linux. Not affiliated with EffectCraft or Storytold.",
+  "long_description": "EffectCraft Bridge lets Claude make motion graphics with the EffectCraft you already have installed on Windows, macOS or Linux (tested with 0.7.0), the open-source, After Effects-class compositor written in Rust.\n\n- **Create**: animated titles, intros, social clips, lower thirds and logo animations from layers — text with any font, shapes, solids, images, videos and audio — with ready-made entrances and exits (fade, slide, pop, zoom, blur, typewriter, spin), keyframes, After Effects-style expressions and any of the 306 effects (Glow, Gaussian Blur, Drop Shadow, Curves, Lumetri Color, Fractal Noise, CC Particle World...).\n- **Add effects to videos**: colour grading, blur, glow, stylize, distort, trims and speed changes, and animated titles and logos on top, one file or a whole folder.\n- **Templates**: Lower Third, Title Card, Logo Reveal, Kinetic Type, Social Square, Vertical Story, Slideshow and 3D Text Orbit, or your own .ectemplate, with your texts, colours and background footage.\n- **Render**: MP4 (H.264), HEVC, AV1, ProRes (with alpha), WebM, GIF, PNG / JPEG / TIFF / EXR sequences, WAV, Lottie, and the editable .ecproj.\n- **Projects and scripts**: render any comp of an .ecproj, inspect projects, preview frames, run After Effects-style JavaScript and any of the 665 engine commands, headless or in the open app.\n\nThe connector drives EffectCraft's own headless engine (effectcraft-cli) with an in-memory project: your media and projects are only read, and nothing is overwritten unless you ask. Everything runs locally with no network access. EffectCraft is an open-source project by Storytold; this connector is not affiliated with or endorsed by them.",
+  "author": {
+    "name": "Jhon Supelano",
+    "url": "https://github.com/jhonsu01"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhonsu01/effectcraft-mcp-server.git"
+  },
+  "homepage": "https://github.com/jhonsu01/effectcraft-mcp-server",
+  "support": "https://github.com/jhonsu01/effectcraft-mcp-server/issues",
+  "icon": "icon.png",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/bundle.cjs",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/bundle.cjs"
+      ],
+      "env": {
+        "EFFECTCRAFT_DIR": "${user_config.effectcraft_dir}",
+        "EFFECTCRAFT_CLI": "${user_config.effectcraft_cli}",
+        "EFFECTCRAFT_CONTROL_PORT": "${user_config.control_port}"
+      }
+    }
+  },
+  "user_config": {
+    "effectcraft_dir": {
+      "type": "directory",
+      "title": "EffectCraft folder",
+      "description": "Install folder of EffectCraft (or EffectCraft.app on macOS). Leave empty to auto-detect: C:Program FilesEffectCraft, /Applications/EffectCraft.app, /usr/bin, /opt/effectcraft or PATH.",
+      "required": false
+    },
+    "effectcraft_cli": {
+      "type": "file",
+      "title": "effectcraft-cli executable (optional)",
+      "description": "Only if it is somewhere else, e.g. where you unzipped effectcraft-cli-<version>-macos-universal.zip on macOS.",
+      "required": false
+    },
+    "control_port": {
+      "type": "string",
+      "title": "EffectCraft control port (optional)",
+      "description": "Port used to drive the EffectCraft app (live mode). Default 9877.",
+      "required": false
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "win32",
+      "darwin",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=20.0.0"
+    }
+  },
+  "tools": [
+    {
+      "name": "create_motion_graphic",
+      "description": "Animated titles and designs from layers, effects and keyframes → video"
+    },
+    {
+      "name": "apply_effects",
+      "description": "Effects, trims, speed and titles on videos and images"
+    },
+    {
+      "name": "use_template",
+      "description": "Fill in a motion template (lower third, title card, social...) and render"
+    },
+    {
+      "name": "render_project",
+      "description": "Render a comp of an .ecproj to video, GIF, frames or Lottie"
+    },
+    {
+      "name": "get_project_info",
+      "description": "Comps, layers, footage and template controls of a project"
+    },
+    {
+      "name": "render_frame",
+      "description": "See frames of a project or a video"
+    },
+    {
+      "name": "list_effectcraft_catalog",
+      "description": "Effects, templates, fonts, commands, formats"
+    },
+    {
+      "name": "run_effectcraft_script",
+      "description": "Run After Effects-style JavaScript, then render"
+    },
+    {
+      "name": "run_effectcraft_commands",
+      "description": "Run any EffectCraft engine commands, headless or live"
+    },
+    {
+      "name": "open_in_effectcraft",
+      "description": "Open projects or media in the EffectCraft app"
+    },
+    {
+      "name": "get_effectcraft_status",
+      "description": "Check the EffectCraft installation and version"
+    }
+  ],
+  "keywords": [
+    "effectcraft",
+    "after-effects",
+    "motion-graphics",
+    "vfx",
+    "animation",
+    "titles",
+    "lottie",
+    "video",
+    "templates",
+    "windows",
+    "macos",
+    "linux"
+  ],
+  "license": "Apache-2.0"
+}

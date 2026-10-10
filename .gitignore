@@ -1,0 +1,46 @@
+node_modules/
+dist/
+*.mcpb
+.tmp/
+*.tsbuildinfo
+.env
+.env.*
+.codegraph/
+NVIDIA Corporation/
+
+# Personal media: never publish anything from this folder
+pruebas/
+
+# Personal projects, media and render outputs
+*.ecproj
+*.ecprojx
+*.ectemplate
+*.ecpreset
+*.aep
+*.mp4
+*.mov
+*.m4v
+*.mkv
+*.webm
+*.avi
+*.mxf
+*.gif
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.webp
+*.exr
+*.psd
+*.wav
+*.mp3
+*.aac
+*.m4a
+*.flac
+*.aif
+*.aiff
+*.json.lottie
+*.lottie
+*.jsx
+!icon.png
