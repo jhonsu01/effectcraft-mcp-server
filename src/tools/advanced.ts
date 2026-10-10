@@ -102,7 +102,7 @@ async function inProject(
     const compName = (proj.items ?? []).find((i: any) => i.id === comp || i.name === comp)?.name ?? 'effectcraft';
     const needsComp = a.formats.some((f: keyof typeof OUTPUTS) => f !== 'ecproj');
     if (needsComp && comp === undefined) throw new Error('There is no composition to render: create one (comp.new) or give comp.');
-    outputs = await renderAll(s, comp, { stemSource: path.join(dir, a.name ?? compName), suffix: '', output_dir: dir, output_path: a.output_path, overwrite: a.overwrite }, a.formats, a as RenderOpts);
+    outputs = await renderAll(s, comp, { stemSource: path.join(dir, a.name ?? compName), name: a.name ?? compName, suffix: '', output_dir: dir, output_path: a.output_path, overwrite: a.overwrite }, a.formats, a as RenderOpts);
   }
   const img = a.preview_time !== undefined ? await preview(s, a.comp, a.preview_time, 960).catch(() => undefined) : undefined;
   return withPreview({ ...body, success: !body.failed, ...(imported.length ? { imported } : {}), ...(outputs ? { outputs } : {}) }, [img], !!body.failed);

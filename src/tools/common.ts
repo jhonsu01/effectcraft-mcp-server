@@ -124,6 +124,13 @@ export interface Rendered {
   warnings?: string[];
 }
 
+/** A file name given by the user: kept as is (dots included), except a trailing output / project extension. */
+export function nameStem(name: string): string {
+  const exts = new Set<string>([...Object.values(OUTPUTS).map((o) => o.ext), 'ecproj', 'ecprojx', 'tiff', 'jpeg', 'aiff']);
+  const m = /\.([^.\\/]+)$/.exec(name);
+  return m && exts.has(m[1].toLowerCase()) ? name.slice(0, -m[0].length) : name;
+}
+
 /**
  * Render (or export / save) the comp once per format: output_path for the first format, the others as
  * <output_dir or the base's folder>/<stem><suffix>.<ext>; image sequences go to their own <stem>_frames folder.
@@ -132,7 +139,7 @@ export interface Rendered {
 export async function renderAll(
   s: EffectCraftSession,
   comp: number | string | undefined,
-  base: { stemSource: string; suffix: string; output_dir?: string; output_path?: string; overwrite?: boolean },
+  base: { stemSource: string; name?: string; suffix: string; output_dir?: string; output_path?: string; overwrite?: boolean },
   formats: OutputFormat[],
   o: RenderOpts,
 ): Promise<Rendered[]> {
@@ -145,7 +152,7 @@ export async function renderAll(
       throw new Error(`output_path must end in .${spec.ext} for ${f}.`);
     }
     const dir = base.output_dir ?? path.dirname(base.output_path ?? base.stemSource);
-    const stem = stemOf(base.output_path ?? base.stemSource) + (base.output_path ? '' : base.suffix);
+    const stem = base.output_path ? stemOf(base.output_path) : (base.name !== undefined ? nameStem(base.name) : stemOf(base.stemSource)) + base.suffix;
     if ('sequence' in spec) {
       const folder = sequenceFolder(dir, stem, base.overwrite);
       const r = await renderQueue(s, comp, path.join(folder, `${stem}.${spec.ext}`), spec.format, o);

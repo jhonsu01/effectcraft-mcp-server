@@ -321,7 +321,7 @@ export function registerMotionTools(server: McpServer): void {
           const c = await s.cmd('comp.new', { name: args.name, width: args.width, height: args.height, frameRate: args.fps, duration: args.duration, background: args.background });
           const comp: CompInfo = { id: c.comp, width: args.width, height: args.height, duration: args.duration };
           const layers = await addLayers(s, comp, args.layers);
-          const outputs = await renderAll(s, comp.id, { stemSource: path.join(dir, args.name), suffix: '', output_dir: dir, output_path: args.output_path, overwrite: args.overwrite }, args.formats, args);
+          const outputs = await renderAll(s, comp.id, { stemSource: path.join(dir, args.name), name: args.name, suffix: '', output_dir: dir, output_path: args.output_path, overwrite: args.overwrite }, args.formats, args);
           const imgs = [];
           for (const t of previewTimes(args.duration, args.preview_times)) imgs.push(await preview(s, comp.id, t, 960));
           return withPreview({ success: true, comp: { name: args.name, size: [args.width, args.height], fps: args.fps, duration: args.duration }, layers, outputs }, imgs);
@@ -475,7 +475,7 @@ export function registerMotionTools(server: McpServer): void {
           }
           if (args.layers.length) await addLayers(s, comp, args.layers);
           const stem = args.name ?? t.template ?? args.template;
-          const outputs = await renderAll(s, compId, { stemSource: path.join(dir, stem), suffix: '', output_dir: dir, output_path: args.output_path, overwrite: args.overwrite }, args.formats, args);
+          const outputs = await renderAll(s, compId, { stemSource: path.join(dir, stem), name: stem, suffix: '', output_dir: dir, output_path: args.output_path, overwrite: args.overwrite }, args.formats, args);
           const imgs = [];
           for (const tm of previewTimes(comp.duration, args.preview_times)) imgs.push(await preview(s, compId, tm, 960));
           return withPreview({ success: true, template: t.template, controls: controls.map((c) => c.name), set: applied, outputs }, imgs);

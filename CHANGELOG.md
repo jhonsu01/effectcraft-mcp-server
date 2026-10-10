@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.3] - 2026-10-10
+### Fixed
+- Output names keep their dots: `name: "intro-1.0.1"` now writes `intro-1.0.1.mp4` (before: `intro-1.0.mp4`, the `.1`
+  was taken for an extension). A real output extension in the name (`intro.mp4`) is still dropped. Also for comp and
+  template names used as file names.
+- Claude Desktop settings: the EffectCraft folder hint shows `C:\Program Files\EffectCraft` (the backslashes were
+  missing).
+### Verified
+- Windows 11 and Debian 12 (Docker): 22/22 end-to-end checks each (new: dots in the output name); the `.mcpb` and the
+  Codex plugin tested unpacked.
+
 ## [1.0.2] - 2026-10-10
 ### Added
 - Codex (OpenAI) plugin: each release also ships `effectcraft-mcp-server-<version>-codex.zip` with

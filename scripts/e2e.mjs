@@ -188,6 +188,9 @@ const rc = await call('run_effectcraft_commands', {
 });
 check(rc.success && rc.completed === 3 && rc.outputs?.[0]?.frames === 10, 'run_effectcraft_commands: comp, shape and effect with $steps ids → GIF');
 
+const dotted = await call('create_motion_graphic', { name: 'intro-1.0.1', width: 160, height: 90, duration: 0.5, background: '#2e1065', layers: [{ type: 'text', text: 'v1' }], formats: ['gif', 'ecproj'], output_dir: join(out, 'dots') });
+check(dotted.success && dotted.outputs?.every((o) => /intro-1\.0\.1\.(gif|ecproj)$/.test(o.path) && existsSync(o.path)), `create_motion_graphic: dots in the name are kept (${dotted.outputs?.map((o) => o.path.split(/[\\/]/).pop()).join(', ')})`);
+
 const relPath = await call('apply_effects', { input_path: 'foto.png' });
 check(!relPath.success && /absolute/.test(relPath.error ?? ''), 'relative paths are rejected');
 check(readdirSync(src).length === 1, 'the input folder still holds only the original image');

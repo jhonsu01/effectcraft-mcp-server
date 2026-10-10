@@ -154,7 +154,7 @@ claude mcp add effectcraft -- node "$PWD/dist/bundle.cjs"
 ```bash
 npm run build       # TypeScript + бандл в один файл (dist/bundle.cjs)
 npm test            # модульные тесты (логика путей Windows, macOS и Linux)
-npm run test:e2e    # 21 сквозная проверка через реальный MCP stdio (синтетическое изображение; видео рендерит EffectCraft)
+npm run test:e2e    # 22 сквозные проверки через реальный MCP stdio (синтетическое изображение; видео рендерит EffectCraft)
 npm run pack:mcpb   # effectcraft-mcp-server.mcpb
 npm run pack:codex  # zip-плагин для Codex
 ```

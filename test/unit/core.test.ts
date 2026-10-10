@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { cleanEnv, connectorDir, resolveInstall, resolveInt } from '../../src/config.js';
 import { resolveOutputPath, sameFile } from '../../src/paths.js';
 import { substitute } from '../../src/tools/advanced.js';
-import { OUTPUTS, collectInputs, sequenceFolder } from '../../src/tools/common.js';
+import { OUTPUTS, collectInputs, nameStem, sequenceFolder } from '../../src/tools/common.js';
 import { layerSchema, propPath } from '../../src/tools/motion.js';
 
 describe('config', () => {
@@ -38,6 +38,12 @@ describe('config', () => {
 });
 
 describe('paths and formats', () => {
+  it('keeps dots in output names, dropping only a real extension', () => {
+    expect(nameStem('intro-1.0.1')).toBe('intro-1.0.1');
+    expect(nameStem('promo.2026')).toBe('promo.2026');
+    expect(nameStem('intro.mp4')).toBe('intro');
+    expect(nameStem('Título final.ECPROJ')).toBe('Título final');
+  });
   it('never overwrites, POSIX case-sensitive', () => {
     const exists = (p: string) => p === 'D:\\v\\intro.mp4';
     expect(resolveOutputPath({ inputPath: 'D:\\v\\intro.mov', ext: 'mp4', exists, platform: 'win32' })).toEqual({ path: 'D:\\v\\intro_2.mp4' });
