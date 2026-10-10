@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2] - 2026-10-10
+### Added
+- Codex (OpenAI) plugin: each release also ships `effectcraft-mcp-server-<version>-codex.zip` with
+  `.codex-plugin/plugin.json` and `.mcp.json` (a local stdio server, `node ./dist/bundle.cjs`), built by
+  `npm run pack:codex` from the same bundle and manifest as the `.mcpb`. The plugin is also listed in the
+  [Craft Bridges](https://github.com/jhonsu01/craft-marketplace) Codex marketplace, which delivers updates.
+- No changes to the tools.
+
 ## [1.0.1] - 2026-10-10
 ### Fixed
 - `slide_up`, `slide_down`, `slide_left` and `slide_right` now name the direction of motion, for entrances and exits
