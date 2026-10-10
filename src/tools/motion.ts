@@ -74,8 +74,8 @@ export const layerSchema = z.object({
   start: z.number().min(0).optional().describe('When the layer appears (s).'),
   end: z.number().positive().optional().describe('When it disappears (s).'),
   // motion
-  animate_in: animSchema.optional().describe('Entrance: fade, slide_left / right / up / down (from off-screen), pop, zoom, blur, typewriter (text), spin.'),
-  animate_out: animSchema.optional().describe('Exit, the same kinds reversed, ending at the layer\'s end.'),
+  animate_in: animSchema.optional().describe('Entrance: fade, slide_left / right / up / down (the direction of motion: slide_up rises in from below the frame), pop, zoom, blur, typewriter (text), spin.'),
+  animate_out: animSchema.optional().describe('Exit, ending at the layer\'s end; slide_* leave the frame moving in that direction.'),
   keyframes: z.array(keyframeSchema).max(50).optional(),
   expressions: z.array(z.object({ property: z.string(), expression: z.string() })).max(20).optional().describe('After Effects-style expressions, e.g. {property: "rotation", expression: "time*90"} or wiggle(2, 30).'),
   effects: z.array(effectSchema).max(20).optional(),
@@ -212,8 +212,10 @@ async function animate(
     case 'slide_up':
     case 'slide_down': {
       const p = ((await cur('transform/position')) ?? [comp.width / 2, comp.height / 2]).slice(0, 2);
-      const off = { slide_left: [-comp.width, 0], slide_right: [comp.width, 0], slide_up: [0, -comp.height], slide_down: [0, comp.height] }[a.type];
-      await key('transform/position', [p[0] + off[0], p[1] + off[1]], p);
+      // the name is the direction of motion: slide_up rises in from below and leaves through the top
+      const m = { slide_left: [-comp.width, 0], slide_right: [comp.width, 0], slide_up: [0, -comp.height], slide_down: [0, comp.height] }[a.type];
+      const sign = out ? 1 : -1;
+      await key('transform/position', [p[0] + sign * m[0], p[1] + sign * m[1]], p);
       break;
     }
     case 'pop': {

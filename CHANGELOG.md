@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1] - 2026-10-10
+### Fixed
+- `slide_up`, `slide_down`, `slide_left` and `slide_right` now name the direction of motion, for entrances and exits
+  alike: `slide_up` rises in from below the frame and, as an exit, leaves through the top. In 1.0.0 the entrances came
+  from the named side, so `slide_up` came down from the top.
+### Verified
+- Windows 11 and Debian 12 (Docker): 21/21 end-to-end checks each (new: positions of a slide_up entrance and a
+  slide_right exit).
+
 ## [1.0.0] - 2026-10-09
 ### Added
 - MCP server on EffectCraft's own engine (`effectcraft-cli mcp`): one private, headless engine per job with an in-memory

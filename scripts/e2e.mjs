@@ -107,7 +107,21 @@ const props = await call('run_effectcraft_commands', {
   ],
 });
 const [op, posAt0, blur0, rot1] = (props.results ?? []).map((r) => r.result);
-check(props.success && op?.keys?.length === 2 && posAt0?.value?.[0] < 0 && blur0?.value === 30 && Math.abs((rot1?.evaluated ?? 0) - 90) < 1, `keys as asked: fade-out ${op?.keys?.length} keys, slide starts at x=${posAt0?.value?.[0]}, blur ${blur0?.value} at 0 s, expression rotation ${rot1?.evaluated}° at 1 s`);
+check(props.success && op?.keys?.length === 2 && posAt0?.value?.[0] > 640 && blur0?.value === 30 && Math.abs((rot1?.evaluated ?? 0) - 90) < 1, `keys as asked: fade-out ${op?.keys?.length} keys, slide starts at x=${posAt0?.value?.[0]}, blur ${blur0?.value} at 0 s, expression rotation ${rot1?.evaluated}° at 1 s`);
+
+const slides = await call('create_motion_graphic', {
+  name: 'slides', width: 400, height: 300, duration: 2,
+  layers: [
+    { type: 'shape', name: 'UP', shape: 'rect', width: 50, height: 50, x: 200, y: 150, animate_in: { type: 'slide_up', duration: 0.5 }, animate_out: { type: 'slide_right', duration: 0.5 } },
+  ],
+  formats: ['ecproj'], output_dir: join(out, 'slides'),
+});
+const sp = await call('run_effectcraft_commands', {
+  open_path: slides.outputs?.[0]?.path,
+  steps: [0, 0.5, 2].map((time) => ({ id: 'get_property', params: { layer: 'UP', path: 'transform/position', time } })),
+});
+const [s0, s1, s2] = (sp.results ?? []).map((r) => r.result?.value ?? []);
+check(sp.success && s0[1] > 300 && Math.abs(s1[1] - 150) < 1 && s2[0] > 400, `slides follow their names: slide_up rises from y=${s0[1]} to ${s1[1]}, slide_right leaves to x=${s2[0]}`);
 
 const again = await call('create_motion_graphic', { name: 'intro ñ', width: 320, height: 180, duration: 0.5, layers: [{ type: 'solid', color: '#ff0000' }], output_dir: join(out, 'mg') });
 const refused = await call('create_motion_graphic', { name: 'x', duration: 0.5, layers: [{ type: 'solid' }], output_path: byFmt.mp4?.path });
