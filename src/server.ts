@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { registerAdvancedTools } from './tools/advanced.js';
 import { registerMotionTools } from './tools/motion.js';
+import { LINK_INSTRUCTIONS } from './links.js';
 
 /** serverInfo.version comes from package.json (reachable as ../package.json from dist/ and src/). */
 export function readPackageVersion(): string {
@@ -28,7 +29,9 @@ export function createServer(): McpServer {
         'cards, social posts); renders to MP4, HEVC, AV1, ProRes, WebM, GIF, image sequences and Lottie; .ecproj projects; After ' +
         'Effects-style scripts. Positions are pixels from the top-left of the comp; times are seconds. All paths must be absolute; inputs ' +
         'are only read; files are never overwritten unless overwrite is true. The engine runs headless and never touches the EffectCraft ' +
-        'app unless live=true.',
+        'app unless live=true.' +
+        ' ' +
+        LINK_INSTRUCTIONS,
     },
   );
   registerMotionTools(server);

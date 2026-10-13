@@ -1,6 +1,6 @@
 {
   "name": "effectcraft-mcp-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "MCP server for EffectCraft: create motion graphics, animated titles and visual effects (text, shapes, media, keyframes, expressions, 306 effects, templates) and render MP4, ProRes, WebM, GIF, image sequences and Lottie with EffectCraft's own engine, from Claude (Windows, macOS, Linux).",
   "type": "module",
   "main": "dist/index.js",
