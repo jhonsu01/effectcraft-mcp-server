@@ -112,6 +112,12 @@ Positionen sind **Pixel ab der linken oberen Ecke der Komposition**; Zeiten sind
 2. In Codex: *Plugins → Hinzufügen → Neues Plugin*, das Zip wählen und auf **Plugin hinzufügen** klicken.
 3. Codex startet den Server mit `node`, daher muss Node.js ≥ 20 im `PATH` liegen. Liegt EffectCraft nicht an einem Standardort, setzen Sie `EFFECTCRAFT_DIR` oder `EFFECTCRAFT_CLI` als Systemumgebungsvariablen (Codex hat für lokale Plugins kein Einstellungsformular).
 
+### DeepSeek Harness
+
+1. *Plugins → Add plugin*, `github:jhonsu01/craft-marketplace#path:/plugins/effectcraft-mcp-server` eingeben, auf **Install** und dann auf **Enable now** klicken.
+2. Harness startet den Server mit seinem eigenen MCP-Client und `node` (Node.js ≥ 20 im `PATH`); die Werkzeuge erscheinen als `mcp__effectcraft__<werkzeug>`, die Ausgabedateien als Karten, die sich in Harness öffnen.
+3. Harness aktualisiert Plugins noch nicht selbst: Zum Aktualisieren das Plugin deinstallieren und mit derselben Adresse neu installieren.
+
 ### Claude Code / andere MCP-Clients
 
 ```bash
